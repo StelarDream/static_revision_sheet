@@ -1326,12 +1326,13 @@
         </div>
       </div>
 
-      <!-- Card 3.2 — Extraction d'une base -->
+      <!-- Card 3.2 — Extraction de base & espaces -->
       <div class="card open" id="card-extract">
         <div class="card-header" onclick="toggleCard('card-extract')">
           <div class="card-title-row">
-            <span class="card-title">Extraction d'une sous-famille libre maximale</span>
+            <span class="card-title">Extraction d'une base — vecteurs, polynômes et fonctions</span>
             <div class="tags">
+              <span class="tag tag-td2">TD2</span>
               <span class="tag tag-bonus">Bonus</span>
               <span class="tag tag-cc">CC</span>
             </div>
@@ -1342,12 +1343,17 @@
         </div>
         <div class="card-body">
           <p>Étant donnée une famille génératrice <em>liée</em>, extraire une <strong>base</strong> du sous-espace
-            engendré et exprimer les vecteurs écartés en combinaison linéaire des vecteurs retenus.</p>
+            engendré
+            et exprimer les vecteurs écartés en combinaison linéaire des vecteurs retenus. La méthode est la même dans
+            \(\mathbb{R}^n\), \(\mathbb{R}_n[X]\) ou tout espace de fonctions.</p>
 
           <div class="step">
             <div class="step-num">1</div>
-            <div class="step-body">Former la matrice \(M\) dont les <strong>colonnes</strong> sont les vecteurs de la
-              famille.</div>
+            <div class="step-body">Former la matrice \(M\) dont les <strong>colonnes</strong> sont les coordonnées des
+              vecteurs dans une base de référence.<br>
+              <em>Dans \(\mathbb{R}_n[X]\) : les coordonnées sont les coefficients de chaque degré \((1, X, X^2,
+                \ldots)\).</em>
+            </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
@@ -1356,37 +1362,105 @@
           </div>
           <div class="step">
             <div class="step-num">3</div>
-            <div class="step-body">Les vecteurs des colonnes pivots forment une <strong>base</strong> du sous-espace.
-            </div>
+            <div class="step-body">Les vecteurs des colonnes pivots forment une <strong>base</strong> du sous-espace. Le
+              rang de \(M\) donne la dimension.</div>
           </div>
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-body">Pour chaque vecteur écarté (colonne non-pivot), résoudre le système pour l'exprimer
-              en combinaison linéaire des vecteurs de base.</div>
+              en
+              combinaison linéaire des vecteurs de base.</div>
           </div>
 
           <div class="definition-box green">
             <div class="def-title">Ce qu'on obtient</div>
             <ul>
               <li>Une base de \(\text{Vect}(v_1,\ldots,v_p)\)</li>
-              <li>La dimension du sous-espace engendré \(= \text{rang}(M)\)</li>
+              <li>La dimension du sous-espace \(= \text{rang}(M)\)</li>
               <li>Les relations de dépendance entre vecteurs</li>
             </ul>
           </div>
 
-          <div class="remark"><strong>Attention :</strong> on échelonne par rapport aux <em>colonnes</em> (les
-            vecteurs), pas par rapport aux lignes. Les opérations élémentaires sur les lignes de \(M\) ne changent pas
-            l'espace engendré par les colonnes.</div>
+          <div class="subsection">
+            <div class="subsection-title">Adaptation à \(\mathbb{R}_n[X]\)</div>
+            <p style="color:var(--text-muted); margin-bottom:10px;">
+              Base canonique : \((1, X, X^2, \ldots, X^n)\), dimension \(n+1\).
+              Pour tester la liberté, poser \(\lambda_1 P_1 + \cdots + \lambda_k P_k = 0\) et identifier
+              les coefficients degré par degré → système linéaire en \(\lambda_i\).
+            </p>
+            <div class="remark"><strong>Attention :</strong> \(\dim\mathbb{R}_n[X] = n+1\), pas \(n\).</div>
+          </div>
+
+          <div class="remark"><strong>Attention :</strong> on opère sur les <em>lignes</em> de \(M\) (opérations
+            élémentaires de Gauss), mais ce sont les <em>colonnes</em> qui représentent les vecteurs. Les opérations sur
+            les lignes ne changent pas l'espace engendré par les colonnes.</div>
 
           <div class="practice-row">
             <span class="practice-label">S'entraîner →</span>
-            <span class="practice-pill pill-bonus">Bonus · Ex. 2</span>
-            <span class="practice-pill pill-cc">CC · Partie A (extraction)</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 3</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 1 &amp; 2</span>
+            <span class="practice-pill pill-cc">CC · Partie A &amp; B</span>
           </div>
         </div>
       </div>
 
-      <!-- Card 3.3 — Base -->
+      <!-- Card 3.3 — Appartenance à un Vect -->
+      <div class="card open" id="card-vect">
+        <div class="card-header" onclick="toggleCard('card-vect')">
+          <div class="card-title-row">
+            <span class="card-title">Tester si \(u \in \text{Vect}(v_1,\ldots,v_p)\)</span>
+            <div class="tags">
+              <span class="tag tag-bonus">Bonus</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Déterminer si un vecteur \(u\) appartient à un sous-espace engendré revient à tester la compatibilité d'un
+            système linéaire.</p>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">Poser \(u = \lambda_1 v_1 + \cdots + \lambda_p v_p\) et former le système linéaire en
+              \((\lambda_1, \ldots, \lambda_p)\).</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">Échelonner la matrice augmentée \([v_1 | \cdots | v_p | u]\).</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              Si le système est <strong>compatible</strong> → \(u \in \text{Vect}(v_1,\ldots,v_p)\), et les
+              \(\lambda_i\)
+              donnent la décomposition explicite.<br>
+              Si le système est <strong>incompatible</strong> → \(u \notin \text{Vect}(v_1,\ldots,v_p)\).
+            </div>
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Lien avec la représentation par équations</div>
+            Si \(F = \text{Vect}(v_1,\ldots,v_p)\) est aussi décrit par des équations \(a_1x_1 + \cdots + a_nx_n = 0\),
+            on peut aussi tester l'appartenance en substituant directement les coordonnées de \(u\) dans ces équations.
+            C'est souvent plus rapide quand les équations sont connues.
+          </div>
+
+          <div class="remark"><strong>Cas particulier :</strong> tester si \(u \in F \cap G\) revient à tester
+            simultanément \(u \in F\) et \(u \in G\), i.e. que \(u\) vérifie les équations des deux sous-espaces.
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 3 (Vect)</span>
+            <span class="practice-pill pill-cc">CC · Partie A</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3.4 — Base -->
       <div class="card open" id="card-base">
         <div class="card-header" onclick="toggleCard('card-base')">
           <div class="card-title-row">
@@ -1445,7 +1519,7 @@
         </div>
       </div>
 
-      <!-- Card 3.4 — Dimension -->
+      <!-- Card 3.5 — Dimension -->
       <div class="card open" id="card-dim">
         <div class="card-header" onclick="toggleCard('card-dim')">
           <div class="card-title-row">
@@ -1494,7 +1568,7 @@
         </div>
       </div>
 
-      <!-- Card 3.5 — Corps des scalaires -->
+      <!-- Card 3.6 — Corps des scalaires -->
       <div class="card open" id="card-corps">
         <div class="card-header" onclick="toggleCard('card-corps')">
           <div class="card-title-row">
@@ -1533,66 +1607,7 @@
         </div>
       </div>
 
-      <!-- Card C3.1 — Bases dans ℝₙ[X] -->
-      <div class="card open" id="card-polynomes">
-        <div class="card-header" onclick="toggleCard('card-polynomes')">
-          <div class="card-title-row">
-            <span class="card-title">Bases dans \(\mathbb{R}_n[X]\) et espaces de fonctions</span>
-            <div class="tags">
-              <span class="tag tag-bonus">Bonus</span>
-            </div>
-          </div>
-          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
-        <div class="card-body">
-          <p>Les techniques de bases et familles libres s'appliquent dans des espaces autres que \(\mathbb{R}^n\). Le
-            piège est d'oublier d'adapter le calcul au contexte.</p>
-
-          <div class="definition-box">
-            <div class="def-title">Base canonique de \(\mathbb{R}_n[X]\)</div>
-            \(\mathbb{R}_n[X]\) = polynômes de degré \(\leq n\).
-            <br>Base canonique : \((1,\, X,\, X^2,\, \ldots,\, X^n)\). Dimension : \(n+1\).
-            <br><em>Attention : \(\dim\mathbb{R}_n[X] = n+1\), pas \(n\).</em>
-          </div>
-
-          <div class="definition-box purple">
-            <div class="def-title">Tester la liberté dans \(\mathbb{R}_n[X]\)</div>
-            Pour \(P_1,\ldots,P_k\in\mathbb{R}_n[X]\), écrire \(\lambda_1 P_1 + \cdots + \lambda_k P_k = 0\).
-            <br>Identifier les coefficients de chaque degré \((1, X, X^2, \ldots)\) → système linéaire en \(\lambda_i\).
-            <br>Si la seule solution est \(\lambda_i = 0\) → famille <strong>libre</strong>.
-          </div>
-
-          <div class="subsection">
-            <div class="subsection-title">Méthode — extraire une base d'une famille génératrice</div>
-            <div class="step">
-              <div class="step-num">1</div>
-              <div class="step-body">Écrire les vecteurs (ou polynômes) en colonnes d'une matrice.</div>
-            </div>
-            <div class="step">
-              <div class="step-num">2</div>
-              <div class="step-body">Échelonner la matrice par Gauss.</div>
-            </div>
-            <div class="step">
-              <div class="step-num">3</div>
-              <div class="step-body">Les colonnes avec pivot ↔ vecteurs à garder. Les colonnes sans pivot ↔ vecteurs
-                redondants (combinaisons linéaires des précédents).</div>
-            </div>
-          </div>
-
-          <div class="remark"><strong>Rappel :</strong> une famille génératrice peut être trop grande (liée). On en
-            extrait une sous-famille libre maximale = base du sous-espace engendré.</div>
-
-          <div class="practice-row">
-            <span class="practice-label">S'entraîner →</span>
-            <span class="practice-pill pill-bonus">Bonus · Ex. 2 (polynômes)</span>
-            <span class="practice-pill pill-cc">CC · Partie B (extraction)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card C3.2 — Famille génératrice vs base libre -->
+      <!-- Card 3.7 — Famille génératrice vs base libre -->
       <div class="card open" id="card-generatrice">
         <div class="card-header" onclick="toggleCard('card-generatrice')">
           <div class="card-title-row">
