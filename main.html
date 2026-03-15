@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiche de Révision — Algèbre Linéaire</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --surface-2: #f0ede6;
+      --border: #d8d2c4;
+      --border-light: #e8e3d9;
+      --text: #1a1713;
+      --text-muted: #6b6455;
+      --text-light: #9c9080;
+      --accent: #2d5a8e;
+      --accent-light: #e8f0f9;
+      --accent-2: #7b4fa6;
+      --accent-2-light: #f3edfb;
+      --accent-3: #2d7a4f;
+      --accent-3-light: #e8f5ee;
+      --accent-4: #b84a1e;
+      --accent-4-light: #fae5dc;
+      --tag-td1: #2d5a8e;
+      --tag-td2: #7b4fa6;
+      --tag-bonus: #2d7a4f;
+      --tag-cc: #b84a1e;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --radius: 10px;
+      --radius-sm: 6px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      max-width: 860px;
+      margin: 0 auto 48px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .page-header .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Category block ── */
+    .category {
+      max-width: 860px;
+      margin: 0 auto 28px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      background: var(--surface);
+      transition: background 0.15s;
+      gap: 16px;
+    }
+
+    .category-header:hover {
+      background: var(--surface-2);
+    }
+
+    .category-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chapter-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      flex-shrink: 0;
+      color: #fff;
+    }
+
+    .num-purple {
+      background: #5a3fa0;
+    }
+
+    .num-teal {
+      background: #1a7a5a;
+    }
+
+    .num-blue {
+      background: #2d5a8e;
+    }
+
+    .num-coral {
+      background: #b84a1e;
+    }
+
+    .cat-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .skill-count {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--text-light);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .category.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    .category-body {
+      display: none;
+      border-top: 1.5px solid var(--border-light);
+      padding: 20px 20px 24px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .category:not(.open) .category-body {
+      display: none;
+    }
+
+    .category.open .category-body {
+      display: flex;
+    }
+
+    /* ── Cards ── */
+    .card {
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      overflow: hidden;
+      transition: box-shadow 0.15s;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+
+    .card-header:hover {
+      background: var(--surface-2);
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Tags / pills */
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 2px 8px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+
+    .tag-td1 {
+      background: #ddeaf9;
+      color: var(--tag-td1);
+    }
+
+    .tag-td2 {
+      background: #ece5f7;
+      color: var(--tag-td2);
+    }
+
+    .tag-bonus {
+      background: #ddf0e6;
+      color: var(--tag-bonus);
+    }
+
+    .tag-cc {
+      background: #fae5dc;
+      color: var(--tag-cc);
+    }
+
+    /* Practice pill */
+    .practice-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .practice-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .practice-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1.5px solid;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .pill-td1 {
+      color: var(--tag-td1);
+      border-color: #9bbfe0;
+      background: #f0f6fc;
+    }
+
+    .pill-td2 {
+      color: var(--tag-td2);
+      border-color: #c4a8e8;
+      background: #f5f0fc;
+    }
+
+    .pill-bonus {
+      color: var(--tag-bonus);
+      border-color: #88cba8;
+      background: #eef8f3;
+    }
+
+    .pill-cc {
+      color: var(--tag-cc);
+      border-color: #e0a090;
+      background: #fdf2ee;
+    }
+
+    .card-chevron {
+      width: 16px;
+      height: 16px;
+      color: var(--text-light);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .card.open .card-chevron {
+      transform: rotate(180deg);
+    }
+
+    .card-body {
+      display: none;
+      border-top: 1px solid var(--border-light);
+      padding: 20px 20px 22px;
+    }
+
+    .card.open .card-body {
+      display: block;
+    }
+
+    /* ── Theory content ── */
+    .card-body p {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .card-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-body strong {
+      color: var(--text);
+    }
+
+    .definition-box {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 14px 16px;
+      margin: 14px 0;
+    }
+
+    .definition-box.purple {
+      background: var(--accent-2-light);
+      border-left-color: var(--accent-2);
+    }
+
+    .definition-box.green {
+      background: var(--accent-3-light);
+      border-left-color: var(--accent-3);
+    }
+
+    .definition-box.coral {
+      background: var(--accent-4-light);
+      border-left-color: var(--accent-4);
+    }
+
+    .def-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .definition-box ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .definition-box li {
+      margin-bottom: 4px;
+      color: var(--text-muted);
+    }
+
+    .definition-box li:last-child {
+      margin-bottom: 0;
+    }
+
+    .remark {
+      background: #fffbec;
+      border: 1px solid #e8d88a;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: #6b5a1e;
+      margin: 12px 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .step-num {
+      min-width: 24px;
+      height: 24px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-body {
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .math-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 0.95rem;
+    }
+
+    .math-block.purple {
+      background: var(--accent-2-light);
+      border-color: #c4a8e8;
+    }
+
+    .math-block.green {
+      background: var(--accent-3-light);
+      border-color: #88cba8;
+    }
+
+    /* ── Subsection ── */
+    .subsection {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border-light);
+    }
+
+    .subsection-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    /* ── Theorem box ── */
+    .theorem-box {
+      background: linear-gradient(135deg, #f0f6fc 0%, #f5f0fc 100%);
+      border: 1.5px solid #b0c8e8;
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      margin: 14px 0;
+    }
+
+    .theorem-box .th-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+        font-size: 11pt;
+      }
+
+      /* Remove left/right margin/padding on outer containers */
+      .page-header,
+      .category {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      /* Remove left/right borders + shadow on category and card */
+      .category {
+        border: none;
+        box-shadow: none;
+        margin-bottom: 14pt;
+      }
+
+      .card {
+        border: none;
+        box-shadow: none;
+      }
+
+      /* Force all content visible regardless of open/closed state */
+      .category-body {
+        display: flex !important;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .card-body {
+        display: block !important;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      /* Remove left/right padding from headers */
+      .category-header,
+      .card-header {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      /* Hide chevrons (irrelevant in print) */
+      .chevron,
+      .card-chevron {
+        display: none;
+      }
+
+      /* ── Page-break control ── */
+
+      /* Never break inside these inline content blocks */
+      .definition-box,
+      .theorem-box,
+      .remark,
+      .math-block,
+      .step,
+      .practice-row {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Cards can break freely, but avoid orphaned headers */
+      .card {
+        break-inside: auto;
+        page-break-inside: auto;
+      }
+
+      .card-header {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      .card-body {
+        break-inside: auto;
+        page-break-inside: auto;
+      }
+
+      /* Keep subsection title glued to what follows */
+      .subsection-title {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      /* Keep category header with at least the first card */
+      .category-header {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      .category+.category {
+        page-break-before: always;
+        break-before: page;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-header">
+    <h1>Algèbre Linéaire</h1>
+    <div class="subtitle">Fiche de révision — L2 · Semestre 2</div>
+    <div class="legend">
+      <div class="legend-item"><span class="tag tag-td1">TD1</span> Systèmes &amp; matrices</div>
+      <div class="legend-item"><span class="tag tag-td2">TD2</span> SEV &amp; applications</div>
+      <div class="legend-item"><span class="tag tag-bonus">Bonus</span> Bases &amp; dimensions</div>
+      <div class="legend-item"><span class="tag tag-cc">CC</span> Contrôle continu</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+     CHAPITRE 1 — SYSTÈMES LINÉAIRES & MATRICES
+══════════════════════════════════════════════════════ -->
+  <div class="category open" id="cat-1">
+    <div class="category-header" onclick="toggleCategory('cat-1')">
+      <div class="category-title">
+        <span class="chapter-num num-purple">1</span>
+        Systèmes linéaires &amp; matrices
+      </div>
+      <div class="cat-meta">
+        <span class="skill-count">3 notions</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="category-body">
+
+      <!-- Card 1.1 — Algorithme de Gauss -->
+      <div class="card open" id="card-gauss">
+        <div class="card-header" onclick="toggleCard('card-gauss')">
+          <div class="card-title-row">
+            <span class="card-title">Algorithme de Gauss (élimination)</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Transformer la matrice augmentée \([A|b]\) en <strong>forme échelonnée</strong> par opérations élémentaires
+            sur les lignes.</p>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body"><strong>Pivot</strong> : repérer le premier élément non nul dans la colonne la plus à
+              gauche.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body"><strong>Éliminer</strong> : annuler tous les termes sous le pivot via \(L_i
+              \leftarrow L_i - \tfrac{a_{ij}}{\text{pivot}} \cdot L_\text{pivot}\).</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body"><strong>Répéter</strong> sur le sous-système restant.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body"><strong>Remonter</strong> (Gauss-Jordan) : normaliser chaque pivot à 1 et éliminer
+              vers le haut pour obtenir la forme échelonnée réduite.</div>
+          </div>
+
+          <div class="definition-box" style="margin-top:14px;">
+            <div class="def-title">Discussion sur les solutions</div>
+            <ul>
+              <li>Ligne \((0\;\cdots\;0\mid c)\) avec \(c\neq 0\) → <strong>système incompatible</strong></li>
+              <li>Nombre de pivots \(= n\) → <strong>solution unique</strong></li>
+              <li>Nombre de pivots \(< n\) → <strong>infinité de solutions</strong> (inconnues libres \(= n -
+                  \text{rang}\))</li>
+            </ul>
+          </div>
+
+          <div class="remark"><strong>⚠ Inconnues principales vs libres :</strong> les colonnes avec pivot donnent les
+            inconnues principales ; les autres sont libres (paramètres de la solution générale).</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 1 &amp; 2</span>
+            <span class="practice-pill pill-cc">CC · Partie A</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 1.2 — Inversion de matrice -->
+      <div class="card open" id="card-inverse">
+        <div class="card-header" onclick="toggleCard('card-inverse')">
+          <div class="card-title-row">
+            <span class="card-title">Inversion de matrice — méthode de Gauss-Jordan</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Pour inverser une matrice carrée \(A\) d'ordre \(n\), on applique Gauss-Jordan simultanément sur \([A \mid
+            I_n]\).</p>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">Former la matrice augmentée \([A \mid I_n]\).</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">Appliquer les opérations élémentaires sur les lignes jusqu'à obtenir \([I_n \mid
+              B]\).</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">Si on obtient \(I_n\) à gauche → \(A\) est inversible et \(A^{-1} = B\).<br>Si une
+              ligne nulle apparaît à gauche → \(A\) est <strong>non inversible</strong>.</div>
+          </div>
+
+          <div class="definition-box">
+            <div class="def-title">Condition d'inversibilité</div>
+            \(A\) est inversible \(\Leftrightarrow \text{rang}(A) = n \Leftrightarrow \det(A) \neq 0 \Leftrightarrow
+            \ker(A) = \{0\}\)
+          </div>
+
+          <div class="remark"><strong>⚠ Attention :</strong> les opérations s'appliquent sur les lignes entières de \([A
+            \mid I_n]\) — ne jamais opérer sur les deux blocs séparément.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 3 (inversion)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 1.3 — Systèmes avec paramètre -->
+      <div class="card open" id="card-param">
+        <div class="card-header" onclick="toggleCard('card-param')">
+          <div class="card-title-row">
+            <span class="card-title">Systèmes avec paramètre — discussion</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Quand la matrice contient un paramètre \(a\) ou \(m\), l'échelonnement fait apparaître des expressions du
+            type \((a-2)\) en position pivot. Il faut <strong>discuter selon les valeurs</strong> de ce paramètre.</p>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">Appliquer Gauss normalement jusqu'à l'apparition d'une expression \(f(a)\) en
+              position pivot.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body"><strong>Cas \(f(a)\neq 0\)</strong> : le pivot existe, continuer ; conclure sur le
+              type de solution.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body"><strong>Cas \(f(a) = 0\)</strong> : analyser la ligne restante → incompatible ou
+              infinité.</div>
+          </div>
+
+          <div class="math-block">$$\text{Rang}(A) \text{ vs } \text{Rang}(A|b) \text{ vs } n \;\Rightarrow\;
+            \text{nature des solutions}$$</div>
+
+          <div class="remark"><strong>Règle d'or :</strong> ne jamais diviser par une expression pouvant être nulle sans
+            avoir d'abord traité ce cas séparément.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 2 (param.)</span>
+            <span class="practice-pill pill-cc">CC · Discussion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 1.4 — Décomposition matricielle & binôme de Newton -->
+      <div class="card open" id="card-newton">
+        <div class="card-header" onclick="toggleCard('card-newton')">
+          <div class="card-title-row">
+            <span class="card-title">Décomposition \(A = D + N\) &amp; calcul de \(A^n\)</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Décomposer une matrice en somme d'une partie <strong>diagonale \(D\)</strong> et d'une partie
+            <strong>nilpotente \(N\)</strong> pour calculer ses puissances efficacement.
+          </p>
+
+          <div class="definition-box purple">
+            <div class="def-title">Matrice nilpotente</div>
+            \(N\) est nilpotente d'indice \(k\) si \(N^k = 0\) et \(N^{k-1}\neq 0\). Pour une matrice \(n\times n\),
+            l'indice est au plus \(n\).
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Méthode pour \(A^n\)</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Écrire \(A = D + N\) avec \(D\) diagonale et \(N\) strictement triangulaire (donc
+                nilpotente).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">Vérifier que \(DN = ND\) (commutativité : vrai si \(D = \lambda I\) ou par calcul
+                direct).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Appliquer le <strong>binôme de Newton</strong> :
+                <div class="math-block">$$A^n = (D+N)^n = \sum_{k=0}^{p-1}\binom{n}{k}D^{n-k}N^k$$</div>
+                où \(p\) est l'indice de nilpotence (la somme s'arrête car \(N^p = 0\)).
+              </div>
+            </div>
+          </div>
+
+          <div class="remark"><strong>⚠ Attention :</strong> le binôme de Newton n'est valable que si \(D\) et \(N\)
+            <em>commutent</em>. Toujours vérifier \(DN = ND\) avant d'appliquer.
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 3 (décomp.)</span>
+            <span class="practice-pill pill-cc">CC · Partie B</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+     CHAPITRE 2 — ESPACES VECTORIELS
+══════════════════════════════════════════════════════ -->
+  <div class="category open" id="cat-2">
+    <div class="category-header" onclick="toggleCategory('cat-2')">
+      <div class="category-title">
+        <span class="chapter-num num-teal">2</span>
+        Espaces vectoriels &amp; sous-espaces
+      </div>
+      <div class="cat-meta">
+        <span class="skill-count">4 notions</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="category-body">
+
+      <!-- Card 2.1 — Définition SEV -->
+      <div class="card open" id="card-sev">
+        <div class="card-header" onclick="toggleCard('card-sev')">
+          <div class="card-title-row">
+            <span class="card-title">Sous-espace vectoriel — définition et vérification</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+              <span class="tag tag-td2">TD2</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Un sous-ensemble \(F\) d'un \(\mathbb{K}\)-espace vectoriel \(E\) est un <strong>sous-espace
+              vectoriel</strong> si et seulement si :</p>
+
+          <div class="definition-box">
+            <div class="def-title">Critère caractéristique (à mémoriser)</div>
+            <ul>
+              <li>\(F \neq \emptyset\) (souvent : montrer que \(0_E \in F\))</li>
+              <li>\(\forall u, v \in F,\; u + v \in F\) (stabilité par addition)</li>
+              <li>\(\forall \lambda \in \mathbb{K},\; \forall u \in F,\; \lambda u \in F\) (stabilité par scalaire)</li>
+            </ul>
+          </div>
+
+          <p>En pratique, on peut regrouper les deux dernières conditions en une seule :</p>
+          <div class="math-block">$$\forall u,v\in F,\;\forall \lambda,\mu\in\mathbb{K},\;\lambda u + \mu v \in F$$
+          </div>
+
+          <div class="remark"><strong>Cas particuliers :</strong> \(\{0_E\}\) et \(E\) lui-même sont toujours des SEV
+            (SEV triviaux). L'union \(F \cup G\) n'est en général <em>pas</em> un SEV.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 4 &amp; 5</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2.2 — Représentations -->
+      <div class="card open" id="card-repr">
+        <div class="card-header" onclick="toggleCard('card-repr')">
+          <div class="card-title-row">
+            <span class="card-title">Représentations d'un SEV : équations ↔ générateurs</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Un SEV peut être décrit de deux façons complémentaires, et on doit savoir passer de l'une à l'autre.</p>
+
+          <div class="definition-box purple">
+            <div class="def-title">Représentation par équations (système)</div>
+            \(F = \{(x_1,\ldots,x_n)\in\mathbb{R}^n \mid a_1x_1 + \cdots + a_nx_n = 0\}\)
+            <br>C'est le noyau d'une application linéaire.
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">Représentation par générateurs (image)</div>
+            \(F = \text{Vect}(v_1,\ldots,v_p) = \{\lambda_1 v_1+\cdots+\lambda_p v_p \mid \lambda_i\in\mathbb{K}\}\)
+            <br>C'est l'image d'une application linéaire.
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Passage d'une forme à l'autre</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body"><strong>Générateurs → équations :</strong> écrire \(x\in\text{Vect}(v_i)\), poser
+                le système \([v_1|\cdots|v_p|x]\) et identifier les conditions de compatibilité.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body"><strong>Équations → générateurs :</strong> résoudre le système homogène, exprimer
+                les inconnues principales en fonction des libres, lire les vecteurs générateurs dans la solution
+                générale.</div>
+            </div>
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 1a &amp; 1b</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2.3 — Intersection et somme -->
+      <div class="card open" id="card-inter">
+        <div class="card-header" onclick="toggleCard('card-inter')">
+          <div class="card-title-row">
+            <span class="card-title">Intersection, somme et somme directe</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+              <span class="tag tag-td2">TD2</span>
+              <span class="tag tag-bonus">Bonus</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+
+          <div class="definition-box">
+            <div class="def-title">Intersection \(F\cap G\)</div>
+            Toujours un SEV. Pour trouver une base : résoudre le système combiné des équations de \(F\) et \(G\).
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Somme \(F + G\)</div>
+            \(F+G = \{u+v \mid u\in F,\; v\in G\}\). Toujours un SEV. Base : réunir les générateurs de \(F\) et \(G\),
+            puis extraire une famille libre.
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">Somme directe \(F\oplus G\)</div>
+            \(F+G\) est une somme directe si \(F\cap G = \{0\}\), ce qui équivaut à : tout vecteur de \(F+G\) s'écrit de
+            façon <em>unique</em> comme \(u+v\) avec \(u\in F\), \(v\in G\).
+            <br><br>Si de plus \(F\oplus G = E\), on dit que \(F\) et \(G\) sont <strong>supplémentaires</strong>.
+          </div>
+
+          <div class="theorem-box">
+            <div class="th-title">Formule de Grassmann</div>
+            $$\dim(F+G) = \dim F + \dim G - \dim(F\cap G)$$
+            Utile pour montrer que \(F\cap G \neq \{0\}\) en comparant les dimensions.
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 6</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 2</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 4</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2.4 — Supplémentaire -->
+      <div class="card open" id="card-suppl">
+        <div class="card-header" onclick="toggleCard('card-suppl')">
+          <div class="card-title-row">
+            <span class="card-title">Construire un supplémentaire d'un SEV</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+              <span class="tag tag-bonus">Bonus</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>\(G\) est un <strong>supplémentaire</strong> de \(F\) dans \(E\) si \(F \oplus G = E\), c'est-à-dire \(F
+            \cap G = \{0\}\) et \(F + G = E\).</p>
+
+          <div class="subsection">
+            <div class="subsection-title">Méthode de construction</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Trouver une base \((f_1,\ldots,f_k)\) de \(F\).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">Compléter en une base de \(E\) : ajouter des vecteurs \((g_1,\ldots,g_{n-k})\) de
+                sorte que \((f_1,\ldots,f_k,g_1,\ldots,g_{n-k})\) soit une base de \(E\).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Poser \(G = \text{Vect}(g_1,\ldots,g_{n-k})\). Par construction \(F \oplus G = E\).
+              </div>
+            </div>
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Unicité</div>
+            Le supplémentaire n'est <strong>pas unique</strong> en général. Il en existe une infinité dès que \(\dim F
+            \geq 1\) et \(\dim E \geq 2\).
+          </div>
+
+          <div class="remark"><strong>Vérification rapide :</strong> \(F \oplus G = E \Leftrightarrow \dim F + \dim G =
+            \dim E\) et \(F \cap G = \{0\}\). En pratique, vérifier la dimension suffit souvent si la liberté est
+            claire.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 2 (supplémentaire)</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2.5 — Vérifier qu'on a un EV -->
+      <div class="card open" id="card-ev">
+        <div class="card-header" onclick="toggleCard('card-ev')">
+          <div class="card-title-row">
+            <span class="card-title">Vérifier qu'une structure est un \(\mathbb{K}\)-espace vectoriel</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Quand l'addition et la multiplication scalaire ne sont <em>pas</em> les opérations standards, il faut
+            vérifier les 8 axiomes d'un espace vectoriel.</p>
+
+          <div class="definition-box">
+            <div class="def-title">Les 8 axiomes (à vérifier)</div>
+            <ul>
+              <li><strong>AG1–AG4 :</strong> \((E, +)\) est un groupe abélien (associativité, commutativité, neutre,
+                opposé)</li>
+              <li><strong>EV1 :</strong> \(1\cdot u = u\)</li>
+              <li><strong>EV2 :</strong> \(\lambda(\mu u) = (\lambda\mu)u\)</li>
+              <li><strong>EV3 :</strong> \((\lambda+\mu)u = \lambda u + \mu u\)</li>
+              <li><strong>EV4 :</strong> \(\lambda(u+v) = \lambda u + \lambda v\)</li>
+            </ul>
+          </div>
+
+          <div class="remark"><strong>Raccourci :</strong> si \(E\) est un SEV d'un EV connu, inutile de tout revérifier
+            — les axiomes d'EV sont hérités automatiquement.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 7 (\(E\times E\))</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card C2.1 — Vérification des 8 axiomes -->
+      <div class="card open" id="card-axiomes">
+        <div class="card-header" onclick="toggleCard('card-axiomes')">
+          <div class="card-title-row">
+            <span class="card-title">Vérifier la structure d'espace vectoriel (8 axiomes)</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Quand on définit un nouvel ensemble \(E\) avec des lois \(+\) et \(\cdot\) personnalisées, il faut vérifier
+            les <strong>8 axiomes</strong> — contrairement au cas d'un SEV d'un espace déjà connu.</p>
+
+          <div class="definition-box">
+            <div class="def-title">Les 4 axiomes pour \((E, +)\)</div>
+            <ul>
+              <li><strong>A1 — Fermeture :</strong> \(\forall u,v\in E,\; u+v \in E\)</li>
+              <li><strong>A2 — Associativité :</strong> \((u+v)+w = u+(v+w)\)</li>
+              <li><strong>A3 — Élément neutre :</strong> \(\exists\, 0_E\in E,\; u + 0_E = u\)</li>
+              <li><strong>A4 — Opposé :</strong> \(\forall u\in E,\; \exists\, {-u}\in E,\; u+(-u) = 0_E\)</li>
+            </ul>
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Les 4 axiomes pour la multiplication scalaire</div>
+            <ul>
+              <li><strong>M1 — Fermeture :</strong> \(\forall \lambda\in\mathbb{K}, u\in E,\; \lambda\cdot u \in E\)
+              </li>
+              <li><strong>M2 — Distributivité / vecteurs :</strong> \(\lambda(u+v) = \lambda u + \lambda v\)</li>
+              <li><strong>M3 — Distributivité / scalaires :</strong> \((\lambda+\mu)u = \lambda u + \mu u\)</li>
+              <li><strong>M4 — Associativité mixte :</strong> \(\lambda(\mu u) = (\lambda\mu)u\) et \(1\cdot u = u\)
+              </li>
+            </ul>
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Méthode — exemple type (TD1)</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Identifier le neutre \(0_E\) : c'est l'élément \(e\) tel que \(u + e = u\) pour
+                la loi \(+\) définie. <em>Attention : ce n'est pas forcément le vecteur nul classique.</em></div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">Vérifier A2 et A3 par calcul direct avec la loi \(+\) donnée.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Vérifier M2, M3, M4 en développant les deux membres avec la multiplication
+                scalaire définie.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">Si un axiome échoue, exhiber un contre-exemple explicite.</div>
+            </div>
+          </div>
+
+          <div class="remark"><strong>Différence clé avec un SEV :</strong> pour un SEV, \(E\) est déjà un espace
+            vectoriel
+            et on vérifie seulement 3 conditions (non vide, stable par \(+\), stable par \(\cdot\)). Ici on repart des
+            axiomes fondamentaux.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 5 (E × E)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card C2.2 — Stabilité par union -->
+      <div class="card open" id="card-union">
+        <div class="card-header" onclick="toggleCard('card-union')">
+          <div class="card-title-row">
+            <span class="card-title">Stabilité par union — pourquoi F ∪ G n'est pas un SEV</span>
+            <div class="tags">
+              <span class="tag tag-td1">TD1</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Un résultat classique souvent demandé en exam : l'union de deux SEV n'est <em>généralement pas</em> un SEV.
+          </p>
+
+          <div class="theorem-box">
+            <div class="th-title">Théorème</div>
+            Soient \(F\) et \(G\) deux SEV de \(E\). Alors :
+            $$F\cup G \text{ est un SEV} \;\Longleftrightarrow\; F\subset G \;\text{ ou }\; G\subset F$$
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Preuve par contre-exemple</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Prendre \(u\in F\setminus G\) et \(v\in G\setminus F\) (si ni \(F\subset G\) ni
+                \(G\subset F\)).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">\(u\in F\cup G\) et \(v\in F\cup G\), mais \(u+v\notin F\) (car \(v\notin F\) et
+                \(F\) est stable) et \(u+v\notin G\) (même raison).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Donc \(u+v\notin F\cup G\) : l'union n'est pas stable par addition.</div>
+            </div>
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">À retenir</div>
+            <ul>
+              <li>\(F\cap G\) est <strong>toujours</strong> un SEV.</li>
+              <li>\(F + G\) est <strong>toujours</strong> un SEV.</li>
+              <li>\(F\cup G\) n'est un SEV que si l'un contient l'autre.</li>
+            </ul>
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td1">TD1 · Ex. 4 (union)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+     CHAPITRE 3 — FAMILLES, BASES & DIMENSION
+══════════════════════════════════════════════════════ -->
+  <div class="category open" id="cat-3">
+    <div class="category-header" onclick="toggleCategory('cat-3')">
+      <div class="category-title">
+        <span class="chapter-num num-blue">3</span>
+        Familles libres, bases &amp; dimension
+      </div>
+      <div class="cat-meta">
+        <span class="skill-count">4 notions</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="category-body">
+
+      <!-- Card 3.1 — Famille libre / liée -->
+      <div class="card open" id="card-libre">
+        <div class="card-header" onclick="toggleCard('card-libre')">
+          <div class="card-title-row">
+            <span class="card-title">Famille libre, liée et génératrice</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+              <span class="tag tag-bonus">Bonus</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+
+          <div class="definition-box">
+            <div class="def-title">Famille libre (linéairement indépendante)</div>
+            \((v_1,\ldots,v_p)\) est libre si :
+            $$\lambda_1 v_1 + \cdots + \lambda_p v_p = 0 \;\Rightarrow\; \lambda_1 = \cdots = \lambda_p = 0$$
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Famille liée</div>
+            Il existe des scalaires non tous nuls tels que \(\sum \lambda_i v_i = 0\). Équivalent : l'un des vecteurs
+            est combinaison linéaire des autres.
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Test pratique</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Poser \(\lambda_1 v_1 + \cdots + \lambda_p v_p = 0\) et résoudre le système
+                linéaire en les \(\lambda_i\).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">Si le seul solution est \(\lambda_i = 0\) pour tout \(i\) → famille
+                <strong>libre</strong>.
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Sinon → famille <strong>liée</strong>. Exprimer le vecteur dépendant en fonction
+                des autres.</div>
+            </div>
+          </div>
+
+          <div class="remark"><strong>Cas particuliers :</strong> un vecteur nul rend toute famille liée. Une famille à
+            un seul vecteur non nul est toujours libre.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 3</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 1 &amp; 2</span>
+            <span class="practice-pill pill-cc">CC · Partie A</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3.2 — Extraction d'une base -->
+      <div class="card open" id="card-extract">
+        <div class="card-header" onclick="toggleCard('card-extract')">
+          <div class="card-title-row">
+            <span class="card-title">Extraction d'une sous-famille libre maximale</span>
+            <div class="tags">
+              <span class="tag tag-bonus">Bonus</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Étant donnée une famille génératrice <em>liée</em>, extraire une <strong>base</strong> du sous-espace
+            engendré et exprimer les vecteurs écartés en combinaison linéaire des vecteurs retenus.</p>
+
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">Former la matrice \(M\) dont les <strong>colonnes</strong> sont les vecteurs de la
+              famille.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">Échelonner \(M\) par Gauss. Repérer les <strong>colonnes pivots</strong> : elles
+              correspondent aux vecteurs à garder.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">Les vecteurs des colonnes pivots forment une <strong>base</strong> du sous-espace.
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">Pour chaque vecteur écarté (colonne non-pivot), résoudre le système pour l'exprimer
+              en combinaison linéaire des vecteurs de base.</div>
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">Ce qu'on obtient</div>
+            <ul>
+              <li>Une base de \(\text{Vect}(v_1,\ldots,v_p)\)</li>
+              <li>La dimension du sous-espace engendré \(= \text{rang}(M)\)</li>
+              <li>Les relations de dépendance entre vecteurs</li>
+            </ul>
+          </div>
+
+          <div class="remark"><strong>Attention :</strong> on échelonne par rapport aux <em>colonnes</em> (les
+            vecteurs), pas par rapport aux lignes. Les opérations élémentaires sur les lignes de \(M\) ne changent pas
+            l'espace engendré par les colonnes.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 2</span>
+            <span class="practice-pill pill-cc">CC · Partie A (extraction)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3.3 — Base -->
+      <div class="card open" id="card-base">
+        <div class="card-header" onclick="toggleCard('card-base')">
+          <div class="card-title-row">
+            <span class="card-title">Bases et coordonnées</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+              <span class="tag tag-bonus">Bonus</span>
+              <span class="tag tag-cc">CC</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Une <strong>base</strong> de \(E\) est une famille à la fois <em>libre</em> et <em>génératrice</em> de
+            \(E\).</p>
+
+          <div class="theorem-box">
+            <div class="th-title">Théorème de la base</div>
+            Tout espace vectoriel de dimension finie admet une base, et toutes les bases ont le même cardinal, appelé
+            <strong>dimension</strong> de \(E\), noté \(\dim E\).
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Construire une base d'un SEV</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body"><strong>Trouver des générateurs</strong> : résoudre le système homogène, lire les
+                vecteurs dans la solution générale.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body"><strong>Vérifier la liberté</strong> : par définition ou par le rang de la matrice
+                formée par ces vecteurs.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body"><strong>Compléter en une base de \(E\)</strong> : ajouter des vecteurs de la base
+                canonique non encore générés.</div>
+            </div>
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">Coordonnées dans une base</div>
+            Si \(\mathcal{B} = (e_1,\ldots,e_n)\) est une base et \(x = x_1e_1+\cdots+x_ne_n\), les scalaires
+            \((x_1,\ldots,x_n)\) sont les <strong>coordonnées</strong> de \(x\) dans \(\mathcal{B}\), uniques.
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 4</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 1 (coord.)</span>
+            <span class="practice-pill pill-cc">CC · Partie A</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3.4 — Dimension -->
+      <div class="card open" id="card-dim">
+        <div class="card-header" onclick="toggleCard('card-dim')">
+          <div class="card-title-row">
+            <span class="card-title">Dimension — propriétés et conséquences</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+              <span class="tag tag-bonus">Bonus</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+
+          <div class="definition-box">
+            <div class="def-title">Propriétés fondamentales</div>
+            <ul>
+              <li>Dans \(E\) de dimension \(n\), toute famille libre a au plus \(n\) vecteurs.</li>
+              <li>Toute famille génératrice a au moins \(n\) vecteurs.</li>
+              <li>Une famille de <em>exactement</em> \(n\) vecteurs est une base si et seulement si elle est libre
+                <em>ou</em> génératrice (une seule condition suffit).
+              </li>
+            </ul>
+          </div>
+
+          <div class="theorem-box">
+            <div class="th-title">Formule de Grassmann</div>
+            Pour \(F, G\) sous-espaces de \(E\) de dimension finie :
+            $$\dim(F+G) = \dim F + \dim G - \dim(F\cap G)$$
+            <br>
+            Corollaire : si \(\dim F + \dim G > \dim E\), alors \(F\cap G \neq \{0\}\).
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Critère de somme directe</div>
+            \(F\oplus G = E\) si et seulement si \(F\cap G = \{0\}\) <strong>et</strong> \(\dim F + \dim G = \dim E\).
+            <br>En pratique, vérifier l'une des conditions et utiliser la formule de Grassmann pour l'autre.
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 5</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 4 (Grassmann)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3.5 — Corps des scalaires -->
+      <div class="card open" id="card-corps">
+        <div class="card-header" onclick="toggleCard('card-corps')">
+          <div class="card-title-row">
+            <span class="card-title">\(\mathbb{C}\) comme \(\mathbb{C}\)-ev vs \(\mathbb{R}\)-ev</span>
+            <div class="tags">
+              <span class="tag tag-bonus">Bonus</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>La dimension d'un espace vectoriel dépend du corps des scalaires choisi. C'est un point souvent
+            sous-estimé.</p>
+
+          <div class="definition-box">
+            <div class="def-title">\(\mathbb{C}\) vu comme \(\mathbb{C}\)-espace vectoriel</div>
+            Base : \((1)\). Dimension : \(\dim_\mathbb{C} \mathbb{C} = 1\).
+            <br>Tout \(z\in\mathbb{C}\) s'écrit \(z\cdot 1\).
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">\(\mathbb{C}\) vu comme \(\mathbb{R}\)-espace vectoriel</div>
+            Base : \((1, i)\). Dimension : \(\dim_\mathbb{R} \mathbb{C} = 2\).
+            <br>Tout \(z = a + bi\) avec \(a,b\in\mathbb{R}\).
+          </div>
+
+          <div class="remark"><strong>Règle :</strong> en multipliant par des scalaires d'un corps plus petit
+            (\(\mathbb{R}\subset\mathbb{C}\)), on a moins de liberté, donc la dimension augmente.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 5 (corps)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card C3.1 — Bases dans ℝₙ[X] -->
+      <div class="card open" id="card-polynomes">
+        <div class="card-header" onclick="toggleCard('card-polynomes')">
+          <div class="card-title-row">
+            <span class="card-title">Bases dans \(\mathbb{R}_n[X]\) et espaces de fonctions</span>
+            <div class="tags">
+              <span class="tag tag-bonus">Bonus</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Les techniques de bases et familles libres s'appliquent dans des espaces autres que \(\mathbb{R}^n\). Le
+            piège est d'oublier d'adapter le calcul au contexte.</p>
+
+          <div class="definition-box">
+            <div class="def-title">Base canonique de \(\mathbb{R}_n[X]\)</div>
+            \(\mathbb{R}_n[X]\) = polynômes de degré \(\leq n\).
+            <br>Base canonique : \((1,\, X,\, X^2,\, \ldots,\, X^n)\). Dimension : \(n+1\).
+            <br><em>Attention : \(\dim\mathbb{R}_n[X] = n+1\), pas \(n\).</em>
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Tester la liberté dans \(\mathbb{R}_n[X]\)</div>
+            Pour \(P_1,\ldots,P_k\in\mathbb{R}_n[X]\), écrire \(\lambda_1 P_1 + \cdots + \lambda_k P_k = 0\).
+            <br>Identifier les coefficients de chaque degré \((1, X, X^2, \ldots)\) → système linéaire en \(\lambda_i\).
+            <br>Si la seule solution est \(\lambda_i = 0\) → famille <strong>libre</strong>.
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Méthode — extraire une base d'une famille génératrice</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Écrire les vecteurs (ou polynômes) en colonnes d'une matrice.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">Échelonner la matrice par Gauss.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Les colonnes avec pivot ↔ vecteurs à garder. Les colonnes sans pivot ↔ vecteurs
+                redondants (combinaisons linéaires des précédents).</div>
+            </div>
+          </div>
+
+          <div class="remark"><strong>Rappel :</strong> une famille génératrice peut être trop grande (liée). On en
+            extrait une sous-famille libre maximale = base du sous-espace engendré.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 2 (polynômes)</span>
+            <span class="practice-pill pill-cc">CC · Partie B (extraction)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card C3.2 — Famille génératrice vs base libre -->
+      <div class="card open" id="card-generatrice">
+        <div class="card-header" onclick="toggleCard('card-generatrice')">
+          <div class="card-title-row">
+            <span class="card-title">Famille génératrice — définition et extraction de base</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+              <span class="tag tag-bonus">Bonus</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+
+          <div class="definition-box">
+            <div class="def-title">Famille génératrice</div>
+            \((v_1,\ldots,v_k)\) est génératrice de \(F\) si tout \(u\in F\) s'écrit
+            \(u = \lambda_1 v_1 + \cdots + \lambda_k v_k\).
+            <br>Autrement dit : \(\text{Vect}(v_1,\ldots,v_k) = F\).
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Les trois notions et leurs relations</div>
+            <ul>
+              <li><strong>Libre</strong> : pas de redondance (aucun vecteur = combinaison linéaire des autres).</li>
+              <li><strong>Génératrice</strong> : couvre tout l'espace.</li>
+              <li><strong>Base</strong> = libre <em>et</em> génératrice.</li>
+            </ul>
+            Dans un espace de dimension \(n\) : une famille de \(n\) vecteurs est une base \(\Leftrightarrow\) elle est
+            libre <em>ou</em> génératrice (une condition suffit).
+          </div>
+
+          <div class="remark"><strong>Méthode rapide :</strong> pour vérifier qu'une famille de \(n\) vecteurs est une
+            base de \(\mathbb{R}^n\), calculer le déterminant de la matrice formée. Si \(\det \neq 0\) → base.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 3 (générateurs → base)</span>
+            <span class="practice-pill pill-bonus">Bonus · Ex. 1 (famille libre)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+     CHAPITRE 4 — APPLICATIONS LINÉAIRES
+══════════════════════════════════════════════════════ -->
+  <div class="category open" id="cat-4">
+    <div class="category-header" onclick="toggleCategory('cat-4')">
+      <div class="category-title">
+        <span class="chapter-num num-coral">4</span>
+        Applications linéaires
+      </div>
+      <div class="cat-meta">
+        <span class="skill-count">3 notions</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="category-body">
+
+      <!-- Card 4.1 — Linéarité -->
+      <div class="card open" id="card-lin">
+        <div class="card-header" onclick="toggleCard('card-lin')">
+          <div class="card-title-row">
+            <span class="card-title">Identifier une application linéaire</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>\(f : E \to F\) est <strong>linéaire</strong> si elle conserve l'addition et la multiplication scalaire.
+          </p>
+
+          <div class="definition-box">
+            <div class="def-title">Définition</div>
+            \(\forall u, v\in E,\;\forall \lambda, \mu\in\mathbb{K} :\)
+            $$f(\lambda u + \mu v) = \lambda f(u) + \mu f(v)$$
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Méthode de vérification</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Calculer \(f(\lambda u + \mu v)\) directement depuis la définition de \(f\).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">Calculer \(\lambda f(u) + \mu f(v)\) séparément.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Si égaux pour tous \(u, v, \lambda, \mu\) → linéaire. Sinon, exhiber un
+                contre-exemple.</div>
+            </div>
+          </div>
+
+          <div class="remark"><strong>Test rapide :</strong> vérifier \(f(0) = 0\) (condition nécessaire mais pas
+            suffisante). Si \(f(0)\neq 0\), \(f\) n'est pas linéaire.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 6 &amp; 7</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4.2 — Noyau et image -->
+      <div class="card open" id="card-ker">
+        <div class="card-header" onclick="toggleCard('card-ker')">
+          <div class="card-title-row">
+            <span class="card-title">Noyau et image d'une application linéaire</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+
+          <div class="definition-box">
+            <div class="def-title">Noyau</div>
+            \(\ker f = \{u\in E \mid f(u) = 0_F\}\)
+            <br>C'est toujours un <strong>SEV de \(E\)</strong>. Pour en trouver une base : résoudre \(f(u) = 0\).
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Image</div>
+            \(\text{Im}\, f = \{f(u) \mid u\in E\} = f(E)\)
+            <br>C'est toujours un <strong>SEV de \(F\)</strong>. Pour en trouver une base : calculer \(f(e_i)\) sur une
+            base \((e_i)\) de \(E\), puis extraire une famille libre.
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">Injectivité et surjectivité</div>
+            <ul>
+              <li>\(f\) injective \(\Leftrightarrow \ker f = \{0\}\)</li>
+              <li>\(f\) surjective \(\Leftrightarrow \text{Im}\, f = F\)</li>
+            </ul>
+          </div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 7 &amp; 8</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4.3 — Théorème du rang -->
+      <div class="card open" id="card-rang">
+        <div class="card-header" onclick="toggleCard('card-rang')">
+          <div class="card-title-row">
+            <span class="card-title">Théorème du rang</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+
+          <div class="theorem-box">
+            <div class="th-title">Théorème du rang (ou théorème noyau-image)</div>
+            Si \(f : E\to F\) est linéaire et \(E\) est de dimension finie :
+            $$\dim E = \dim(\ker f) + \dim(\text{Im}\, f) = \dim(\ker f) + \text{rang}(f)$$
+          </div>
+
+          <div class="subsection">
+            <div class="subsection-title">Applications directes</div>
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">Calculer \(\dim(\ker f)\) par résolution du système homogène.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">En déduire \(\dim(\text{Im}\, f) = \dim E - \dim(\ker f)\) sans calculer
+                explicitement \(\text{Im}\, f\).</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">Vérifier injectivité / surjectivité : si \(\dim E = \dim F\) et \(f\) injective,
+                alors \(f\) est aussi surjective (isomorphisme).</div>
+            </div>
+          </div>
+
+          <div class="remark"><strong>Lien avec Grassmann :</strong> le théorème du rang est l'analogue pour les
+            applications linéaires de la formule de Grassmann pour les sous-espaces.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 9 (rang)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card C4.1 — Isomorphisme -->
+      <div class="card open" id="card-iso">
+        <div class="card-header" onclick="toggleCard('card-iso')">
+          <div class="card-title-row">
+            <span class="card-title">Isomorphisme d'espaces vectoriels</span>
+            <div class="tags">
+              <span class="tag tag-td2">TD2</span>
+            </div>
+          </div>
+          <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <p>Un isomorphisme est une application linéaire bijective. C'est la notion qui formalise que deux espaces ont
+            la "même structure".</p>
+
+          <div class="definition-box">
+            <div class="def-title">Définition</div>
+            \(f : E \to F\) est un <strong>isomorphisme</strong> si \(f\) est linéaire et bijective.
+            <br>On note alors \(E \cong F\).
+          </div>
+
+          <div class="definition-box purple">
+            <div class="def-title">Caractérisations équivalentes</div>
+            Pour \(f : E\to F\) linéaire :
+            <ul>
+              <li>\(f\) isomorphisme \(\Leftrightarrow\) \(f\) injective et surjective</li>
+              <li>\(\Leftrightarrow\; \ker f = \{0\}\) et \(\text{Im}\,f = F\)</li>
+              <li>\(\Leftrightarrow\; \dim E = \dim F\) et \(f\) injective <em>(si dim finie)</em></li>
+              <li>\(\Leftrightarrow\; \dim E = \dim F\) et \(f\) surjective <em>(si dim finie)</em></li>
+            </ul>
+          </div>
+
+          <div class="theorem-box">
+            <div class="th-title">Conséquence du théorème du rang</div>
+            Si \(\dim E = \dim F = n\) et \(f\) linéaire, alors :
+            $$f \text{ injective} \;\Longleftrightarrow\; f \text{ surjective} \;\Longleftrightarrow\; f \text{
+            isomorphisme}$$
+            En dimension finie égale, il suffit de vérifier <em>une seule</em> des deux conditions.
+          </div>
+
+          <div class="definition-box green">
+            <div class="def-title">Résultat important sur les dimensions</div>
+            Deux espaces vectoriels de dimension finie sur le même corps sont isomorphes si et seulement si ils ont
+            la même dimension.
+            <br>En particulier : \(\mathbb{R}^n \cong \mathbb{R}_n[X] / \cdots\) dès que la dimension est \(n\).
+          </div>
+
+          <div class="remark"><strong>Lien avec le cours :</strong> le théorème du rang donne
+            \(\dim(\ker f) + \text{rang}(f) = \dim E\). Si \(\dim E = \dim F\), avoir \(\ker f = \{0\}\) force
+            \(\text{rang}(f) = \dim F\), donc \(f\) surjective automatiquement.</div>
+
+          <div class="practice-row">
+            <span class="practice-label">S'entraîner →</span>
+            <span class="practice-pill pill-td2">TD2 · Ex. 8 (inj. ↔ surj.)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    function toggleCategory(id) {
+      document.getElementById(id).classList.toggle('open');
+      setTimeout(() => { if (window.MathJax) MathJax.typesetPromise(); }, 50);
+    }
+    function toggleCard(id) {
+      document.getElementById(id).classList.toggle('open');
+      setTimeout(() => { if (window.MathJax) MathJax.typesetPromise(); }, 50);
+    }
+  </script>
+</body>
+
+</html>
